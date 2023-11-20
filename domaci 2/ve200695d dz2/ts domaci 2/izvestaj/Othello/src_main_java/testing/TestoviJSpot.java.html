@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestoviJSpot.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">testing (1) (Jan 19, 2023 9:24:55 PM)</a> &gt; <a href="../../index.html" class="el_group">Othello</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">testing</a> &gt; <span class="el_source">TestoviJSpot.java</span></div><h1>TestoviJSpot.java</h1><pre class="source lang-java linenums">package testing;
+import static org.junit.Assert.assertEquals;
+
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+import java.awt.AWTException;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Panel;
+import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+
+import org.junit.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import othello.*;
+
+import org.mockito.Mockito;
+import org.mockito.Mockito.*;
+
+<span class="fc" id="L27">public class TestoviJSpot {</span>
+	
+	private JSpotBoard board;
+	private JSpot spot;
+	
+	
+	@Before
+	public void before() {
+<span class="fc" id="L35">		board = new JSpotBoard(10,10);</span>
+<span class="fc" id="L36">		spot = new JSpot(Color.BLACK, Color.WHITE, Color.GRAY, board, 5, 5);</span>
+<span class="fc" id="L37">		spot.clearSpot();</span>
+<span class="fc" id="L38">	}</span>
+	
+	@Test
+	public void testiranjeKonstruktora() {
+<span class="fc" id="L42">		assertEquals(5, spot.getSpotX());</span>
+<span class="fc" id="L43">		assertEquals(5, spot.getSpotY());</span>
+<span class="fc" id="L44">		assertEquals(board, spot.getBoard());</span>
+<span class="fc" id="L45">		assertEquals(true, spot.isEmpty());</span>
+<span class="fc" id="L46">		assertEquals(false, spot.isHighlighted());</span>
+<span class="fc" id="L47">		assertEquals(Color.WHITE, spot.getSpotColor());</span>
+<span class="fc" id="L48">		assertEquals(Color.GRAY, spot.getHighlight());</span>
+<span class="fc" id="L49">	}</span>
+	
+	@Test
+	public void testiranjeHajlajtovanja() {
+<span class="fc" id="L53">		spot.highlightSpot();</span>
+<span class="fc" id="L54">		assertEquals(true, spot.isHighlighted());</span>
+<span class="fc" id="L55">	}</span>
+	
+	@Test
+	public void testiranjeHajlajtFalse() {
+<span class="fc" id="L59">		spot.unhighlightSpot();</span>
+<span class="fc" id="L60">		assertEquals(false, spot.isHighlighted());</span>
+<span class="fc" id="L61">	}</span>
+	
+	@Test
+	public void testiranjeToggleHajlajt() {
+<span class="fc" id="L65">		spot.toggleHighlight();</span>
+<span class="fc" id="L66">		assertTrue(true);</span>
+<span class="fc" id="L67">	}</span>
+	
+	@Test
+	public void testiranjeToggleHajlajt2() {
+<span class="fc" id="L71">		spot.highlightSpot();</span>
+<span class="fc" id="L72">		spot.toggleHighlight();</span>
+<span class="fc" id="L73">		assertTrue(true);</span>
+<span class="fc" id="L74">	}</span>
+	
+	@Test
+	public void testiranjeToggleSpot() {
+<span class="fc" id="L78">		spot.toggleSpot();</span>
+<span class="fc" id="L79">		assertTrue(true);</span>
+<span class="fc" id="L80">		spot.setSpot();</span>
+<span class="fc" id="L81">		spot.toggleSpot();</span>
+<span class="fc" id="L82">		assertTrue(true);</span>
+<span class="fc" id="L83">	}</span>
+	
+	
+	@Test
+	public void testiranjeIspisa() {
+<span class="fc" id="L88">		spot.getCoordString();</span>
+<span class="fc" id="L89">		assertTrue(true);</span>
+<span class="fc" id="L90">	}</span>
+	
+	
+	@Test(expected= IllegalArgumentException.class)
+	public void testiranjeSetovanjaBoje() {
+<span class="fc" id="L95">		spot.setSpotColor(Color.BLUE);</span>
+<span class="fc" id="L96">		assertEquals(Color.BLUE, spot.getSpotColor());</span>
+<span class="fc" id="L97">		String message = null;</span>
+<span class="nc" id="L98">		try {spot.setSpotColor(null);}</span>
+<span class="fc" id="L99">		catch(IllegalArgumentException ie) {</span>
+<span class="fc" id="L100">			message = null;</span>
+		}
+<span class="fc" id="L102">		assertEquals(null, message);</span>
+<span class="fc" id="L103">	}</span>
+	
+	@Test(expected= IllegalArgumentException.class)
+	public void testiranjeSetovanjaHajlajta() {
+<span class="fc" id="L107">		spot.setHighlight(Color.BLUE);</span>
+<span class="fc" id="L108">		assertEquals(Color.BLUE, spot.getHighlight());</span>
+<span class="fc" id="L109">		String message = null;</span>
+<span class="nc" id="L110">		try {spot.setHighlight(null);}</span>
+<span class="fc" id="L111">		catch(IllegalArgumentException ie) {</span>
+<span class="fc" id="L112">			message = null;</span>
+		}
+<span class="fc" id="L114">		assertEquals(null, message);</span>
+<span class="fc" id="L115">	}</span>
+	
+	@Test
+	public void mockito1() {   //-----------click----------------
+<span class="fc" id="L119">		SpotListener listener = new OthelloWidget();</span>
+<span class="fc" id="L120">		MouseEvent mockEvent = mock(MouseEvent.class);</span>
+<span class="fc" id="L121">		spot.addSpotListener(listener);</span>
+<span class="fc" id="L122">		spot.mouseClicked(mockEvent);</span>
+<span class="fc" id="L123">		assertTrue(true);</span>
+<span class="fc" id="L124">		spot.removeSpotListener(listener);</span>
+<span class="fc" id="L125">	}</span>
+	
+	@Test
+	public void mokito2() {
+<span class="fc" id="L129">		spot = mock(JSpot.class);</span>
+<span class="fc" id="L130">		spot.setSpot();</span>
+<span class="fc" id="L131">		assertEquals(false, spot.isEmpty());</span>
+<span class="fc" id="L132">	}</span>
+	
+	@Test
+	public void mis() {
+<span class="fc" id="L136">		Panel p = new Panel();</span>
+<span class="fc" id="L137">		MouseEvent me = new MouseEvent(p, 0, 0, 0, 0, 0, 0, false);</span>
+<span class="fc" id="L138">		spot.mousePressed(me);</span>
+<span class="fc" id="L139">		spot.mouseReleased(me);</span>
+<span class="fc" id="L140">		spot.mouseEntered(me);</span>
+<span class="fc" id="L141">	}</span>
+	
+	@ParameterizedTest
+	@CsvSource({&quot;#ffff&quot;})
+	public void testiranjeBoje(String i) {
+<span class="fc" id="L146">		JSpot spot = new JSpot(Color.BLACK, Color.WHITE, Color.GRAY, board, 5, 5);</span>
+<span class="fc" id="L147">		Color c = Color.decode(i);</span>
+<span class="fc" id="L148">		spot.setSpotColor(c);</span>
+<span class="fc" id="L149">		assertEquals(c, spot.getSpotColor());</span>
+<span class="fc" id="L150">	}</span>
+	
+	@ParameterizedTest
+	@CsvSource({&quot;#ffff&quot;})
+	public void testiranjeSpot(String i) {
+<span class="fc" id="L155">		JSpot spot = new JSpot(Color.BLACK, Color.WHITE, Color.GRAY, board, 5, 5);</span>
+<span class="fc" id="L156">		Color c = Color.decode(i);</span>
+<span class="fc" id="L157">		spot.setHighlight(c);</span>
+<span class="fc" id="L158">		assertEquals(c, spot.getHighlight());</span>
+<span class="fc" id="L159">	}</span>
+	
+	/*@Ignore
+	public void press() {
+		SpotListener listener = new OthelloWidget();
+		MouseEvent mockEvent = mock(MouseEvent.class);
+		spot.addSpotListener(listener);
+		spot.mousePressed(mockEvent);
+		assertTrue(true);
+	}
+	
+	@Ignore
+	public void release() {
+		SpotListener listener = new OthelloWidget();
+		MouseEvent mockEvent = mock(MouseEvent.class);
+		spot.addSpotListener(listener);
+		spot.mouseReleased(mockEvent);
+		assertTrue(true);
+	}*/
+	/*public void mockito4() {   //-----------pressed----------------
+		MouseEvent mockEvent = mock(MouseEvent.class);
+		spot.mousePressed(mockEvent);
+		assertTrue(true);
+	}
+	
+	public void mockito5() {   //-----------released----------------
+		MouseEvent mockEvent = mock(MouseEvent.class);
+		spot.mouseReleased(mockEvent);
+		assertTrue(true);
+	}*/
+	
+	@Test
+	public void robot() throws AWTException {
+<span class="fc" id="L192">		Robot r = new Robot();</span>
+<span class="fc" id="L193">		r.mouseMove(200, 200);r.mousePress(0);	</span>
+<span class="fc" id="L194">		r.mouseRelease(0);</span>
+<span class="fc" id="L195">	}</span>
+	
+
+	@After
+	public void after() {
+<span class="fc" id="L200">		spot.setSpot();</span>
+<span class="fc" id="L201">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>testing (1) (Jan 19, 2023 9:24:55 PM)</div></body></html>
